@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Set;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -12,35 +14,71 @@
  * @author  Michael Kölling and David J. Barnes
  * @version 2016.02.29
  */
-import java.util.HashMap;
-import java.util.Set;
-
 public class Room
 {
-    public String description;
-    private HashMap<String, Room> exits;
-
+    private String description;
+    private HashMap<String,Room> exits;
+    private HashMap<String, Item> items;
 
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
+     * "an open courtyard".
      * @param description The room's description.
      */
     public Room(String description)
     {
         this.description = description;
         exits = new HashMap<>();
+        items = new HashMap<>();
+
     }
 
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
+     *  The north exit.
+     *  The east exit.
+     *  The south exit.
+     *  The west exit.
      */
+    public void setExits(String direction, Room neighbor)
+    {
+        exits.put(direction, neighbor);
+    }
+
+    public void addItem(String name, String description) {
+        // check if the item already exists in the map.
+        // if exists just don´t add it.
+        Set<String> keys = items.keySet();
+        for (String item : items.keySet()) {
+            if(item.equals(name))
+                return;
+        }
+        Item newItem = new Item(name, description);
+        items.put(name, newItem);
+    }
+    public void printItems() {
+        if (items.isEmpty()) {
+            System.out.println("No items in this room.");
+        } else {
+            System.out.println("Items in this room:");
+            for (Item item : items.values()) {
+                System.out.println("- " + item.getName() + ": " + item.getDescription());
+            }
+        }
+    }
+
+    public Item getItem(String itemName) {
+        return items.get(itemName);
+    }
+
+    public Item delItem(String itemName) {
+        return items.remove(itemName);
+    }
+    public Room getExit(String direction){
+        return exits.get(direction);
+    }
 
     /**
      * @return The description of the room.
@@ -49,26 +87,20 @@ public class Room
     {
         return description;
     }
-    public String getLocationDescription(){
-        String locationDescription = "You are " + getDescription() + " \n" + getAllExits();
-        return locationDescription;
+    public String getLongDescription(){
+        return "You are " + description + ". \n" + getExitString();
     }
 
-    public Room getExit(String direction){
-        return exits.get(direction);
-    }
-    public void setExits(String direction, Room room){
-        exits.put(direction,room);
-    }
-
-    public String getAllExits() {
-        String allExits = "Exits: ";
-        Set<String> directionsKeys = exits.keySet();
-
-        for (String direction : directionsKeys) {
-            allExits = allExits + " " + direction;
+    public String getExitString(){
+        String returnString = "Exits:";
+        Set<String> keys = exits.keySet();
+        for(String exit: keys){
+            returnString += " " + exit;
         }
-        return allExits;
+        return returnString;
+    }
 
+    public HashMap<String, Room> getExits() {
+        return exits;
     }
 }
