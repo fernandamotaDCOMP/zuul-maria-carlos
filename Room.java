@@ -8,17 +8,18 @@
  * connected to other rooms via exits.  The exits are labelled north, 
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
- * 
+ *
  * @author  Michael Kölling and David J. Barnes
  * @version 2016.02.29
  */
-public class Room 
+import java.util.HashMap;
+import java.util.Set;
+
+public class Room
 {
     public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
+    private HashMap<String, Room> exits;
+
 
     /**
      * Create a room described "description". Initially, it has
@@ -26,9 +27,10 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description)
     {
         this.description = description;
+        exits = new HashMap<>();
     }
 
     /**
@@ -39,21 +41,6 @@ public class Room
      * @param south The south exit.
      * @param west The west exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west) 
-    {
-        if(north != null) {
-            northExit = north;
-        }
-        if(east != null) {
-            eastExit = east;
-        }
-        if(south != null) {
-            southExit = south;
-        }
-        if(west != null) {
-            westExit = west;
-        }
-    }
 
     /**
      * @return The description of the room.
@@ -62,5 +49,26 @@ public class Room
     {
         return description;
     }
+    public String getLocationDescription(){
+        String locationDescription = "You are " + getDescription() + " \n" + getAllExits();
+        return locationDescription;
+    }
 
+    public Room getExit(String direction){
+        return exits.get(direction);
+    }
+    public void setExits(String direction, Room room){
+        exits.put(direction,room);
+    }
+
+    public String getAllExits() {
+        String allExits = "Exits: ";
+        Set<String> directionsKeys = exits.keySet();
+
+        for (String direction : directionsKeys) {
+            allExits = allExits + " " + direction;
+        }
+        return allExits;
+
+    }
 }
