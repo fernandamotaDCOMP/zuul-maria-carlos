@@ -49,19 +49,20 @@ public class Room
     {
         return description;
     }
+
     public String getLocationDescription(){
-        String locationDescription = "You are " + getDescription() + " \n" + getAllExits();
+        String locationDescription = "You are " + description + " \n" + getExitString();
         return locationDescription;
     }
 
     public Room getExit(String direction){
         return exits.get(direction);
     }
-    public void setExits(String direction, Room room){
-        exits.put(direction,room);
+    public void setExits(String direction, Room neighbor){
+        exits.put(direction,neighbor);
     }
 
-    public String getAllExits() {
+    public String getExitString() {
         String allExits = "Exits: ";
         Set<String> directionsKeys = exits.keySet();
 
