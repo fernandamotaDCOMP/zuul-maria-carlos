@@ -42,18 +42,19 @@ public class Game
      */
     private void createRooms()
     {
-        Room portaria, ccet, didUm, didDois, dComp, moura,secretary,board;
+        Room portaria, ccet, didUm, didDois, dComp, moura,secretary, board, didTres;
 
         // create the rooms
         portaria = new Room("at the main entrance of the university");
         ccet = new Room("in the CCET");
-        didUm = new Room("in Didactics 1 \nTeacher: Excuse me! You disrupted the class!");
+        didUm = new Room("in Didactics 1 \n Teacher: Excuse me! You disrupted the class!");
         didDois = new Room("in Didactics 2");
         dComp = new Room("in DComp \nYou have won a cup of coffee to have the"+
                 " energy to search for Moura for another minute \n");
-        moura = new Room("in the Moura snack bar. \nYou found in time");
+        moura = new Room("in the Moura snack bar. \n You found in time");
         secretary = new Room("in the secretary");
         board = new Room("In the board");
+        didTres = new Room("in Didactics 3");
 
         // initialise room exits
         portaria.setExits("east",ccet);
@@ -63,14 +64,18 @@ public class Game
         ccet.setExits("west", portaria);
         didUm.setExits("north", portaria);
         didUm.setExits("east", didDois);
+        didUm.setExits("west", didTres);
         didDois.setExits("north", ccet);
         didDois.setExits("south", moura);
         didDois.setExits("west", didUm);
         didDois.setExits("upExit",secretary);
+        didTres.setExits("east", didUm);
+        didTres.setExits("north", dComp);
         secretary.setExits("north", board);
         secretary.setExits("downExit", didDois);
         board.setExits("south",secretary);
         dComp.setExits("east", portaria);
+        dComp.setExits("south", didTres);
 
         dComp.addItem("Coffee","A dark, aromatic liquid contained in an ornate bottle, providing instant energy and mental clarity for a short period.");
         dComp.addItem("Cat","a kitten sleeps peacefully in the entryway.");
