@@ -42,7 +42,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room portaria, ccet, didUm, didDois, dComp, moura,secretary, board, didTres;
+        Room portaria, ccet, didUm, didDois, dComp, moura,secretary, board, didTres, didQuatro;
 
         // create the rooms
         portaria = new Room("at the main entrance of the university");
@@ -55,6 +55,7 @@ public class Game
         secretary = new Room("in the secretary");
         board = new Room("In the board");
         didTres = new Room("in Didactics 3");
+        didQuatro = new Room("in Didactics 4");
 
         // initialise room exits
         portaria.setExits("east",ccet);
@@ -65,6 +66,7 @@ public class Game
         didUm.setExits("north", portaria);
         didUm.setExits("east", didDois);
         didUm.setExits("west", didTres);
+        didUm.setExits("south", didQuatro);
         didDois.setExits("north", ccet);
         didDois.setExits("south", moura);
         didDois.setExits("west", didUm);
@@ -76,12 +78,13 @@ public class Game
         board.setExits("south",secretary);
         dComp.setExits("east", portaria);
         dComp.setExits("south", didTres);
-
         dComp.addItem("Coffee","A dark, aromatic liquid contained in an ornate bottle, providing instant energy and mental clarity for a short period.");
         dComp.addItem("Cat","a kitten sleeps peacefully in the entryway.");
         portaria.addItem("Paper","a small folded piece of paper, with useless information.");
         didDois.addItem("Pen","There's a pen on the floor in one of the rooms.");
         didUm.addItem("chalk","A small piece of chalk on the edge of the blackboard.");
+        didQuatro.setExits("north", didUm);
+        didQuatro.setExits("east", moura);
 
         currentRoom = portaria;
     }
@@ -218,8 +221,11 @@ public class Game
 
 
     }
-    private void printLocationInfo() {
 
+    /**
+     * Provide the room description, possible exits, and the items in the location.
+     */
+    private void printLocationInfo() {
         System.out.println(currentRoom.getLongDescription());
         currentRoom.printItems();
 
@@ -228,6 +234,7 @@ public class Game
      * The purpose of look is merely to print out the description
      *  of the room and the exits again.
      */
+
     private void look(){
         printLocationInfo();
     }

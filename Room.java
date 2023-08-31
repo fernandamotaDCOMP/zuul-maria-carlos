@@ -47,9 +47,10 @@ public class Room
         exits.put(direction, neighbor);
     }
 
+    /**
+     * Check if the item already exists in the map, if exists just don´t add it.
+     */
     public void addItem(String name, String description) {
-        // check if the item already exists in the map.
-        // if exists just don´t add it.
         Set<String> keys = items.keySet();
         for (String item : items.keySet()) {
             if(item.equals(name))
@@ -58,6 +59,10 @@ public class Room
         Item newItem = new Item(name, description);
         items.put(name, newItem);
     }
+
+    /**
+     * Check if there are items in the location.
+     */
     public void printItems() {
         if (items.isEmpty()) {
             System.out.println("No items in this room.");
@@ -69,13 +74,17 @@ public class Room
         }
     }
 
+    //Item access method
     public Item getItem(String itemName) {
         return items.get(itemName);
     }
 
+    // Item mutation method
     public Item delItem(String itemName) {
         return items.remove(itemName);
     }
+
+    //Exit access method
     public Room getExit(String direction){
         return exits.get(direction);
     }
@@ -87,10 +96,15 @@ public class Room
     {
         return description;
     }
+
+    /**
+     * @return The room description and the possible exits.
+     */
     public String getLongDescription(){
         return "You are " + description + ". \n" + getExitString();
     }
 
+    // Returns the possible exits
     public String getExitString(){
         String returnString = "Exits:";
         Set<String> keys = exits.keySet();
@@ -100,6 +114,9 @@ public class Room
         return returnString;
     }
 
+    /**
+     * Creates the direction keys and the corresponding room value
+     */
     public HashMap<String, Room> getExits() {
         return exits;
     }
